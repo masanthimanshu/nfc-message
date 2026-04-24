@@ -1,3 +1,4 @@
+import { fromIni } from "@aws-sdk/credential-providers";
 import {
   InvokeModelCommand,
   BedrockRuntimeClient,
@@ -5,26 +6,22 @@ import {
 
 const llmClient = new BedrockRuntimeClient({
   region: process.env.CURRENT_AWS_REGION,
+  credentials: fromIni({ profile: process.env.AWS_USER_PROFILE }),
 });
 
 export async function invokeModel(prompt) {
   const command = new InvokeModelCommand({
-    modelId: "amazon.nova-lite-v1:0",
+    modelId: "google.gemma-3-4b-it",
     contentType: "application/json",
     accept: "application/json",
     body: JSON.stringify({
-      system: [{ text: "You are a helpful assistant." }],
-      messages: [
-        {
-          role: "user",
-          content: [{ text: prompt }],
-        },
-      ],
+      messages: [{ role: "user", content: prompt }],
+      system_instruction: { text: "You are a helpful assistant." },
     }),
   });
 
   const res = await llmClient.send(command);
   const result = JSON.parse(new TextDecoder().decode(res.body));
 
-  return result;
+  return result.choices[0].message.content;
 }

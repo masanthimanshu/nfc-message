@@ -9,11 +9,11 @@ provider:
   runtime: nodejs24.x
 
   environment:
-    TABLE_NAME: messages-data-table
     CURRENT_AWS_REGION: ap-south-1
+    TABLE_NAME: messages-data-table
+    AWS_USER_PROFILE: serverless-user
 
-  iam:
-    ${file(aws/iam.yaml)}
+  iam: ${file(aws/iam.yaml)}
 
 plugins:
   - serverless-offline
