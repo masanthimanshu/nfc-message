@@ -1,1 +1,1 @@
-# This file shows the details of the GitHub Action used in this repository
+# Details of the GitHub Action used in this repository.

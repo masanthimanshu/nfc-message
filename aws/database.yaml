@@ -1,5 +1,5 @@
 Resources:
-  PookieDataTable:
+  MessageDataTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: messages-data-table
