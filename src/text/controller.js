@@ -7,7 +7,7 @@ export const textController = {
    */
 
   async writeMessage(req, res) {
-    logger.info("Received write message request", { data: req.body });
+    logger.info("Write message request data", { data: req.body });
 
     return res.send({
       message: "Write message endpoint is under construction",
