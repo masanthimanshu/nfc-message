@@ -9,7 +9,11 @@ provider:
   runtime: nodejs24.x
 
   environment:
+    TABLE_NAME: messages-data-table
     CURRENT_AWS_REGION: ap-south-1
+
+  iam:
+    ${file(aws/iam.yaml)}
 
 plugins:
   - serverless-offline
@@ -21,3 +25,6 @@ functions:
       - httpApi:
           path: /text/{proxy+}
           method: ANY
+
+resources:
+  - ${file(aws/database.yaml)}
