@@ -1,0 +1,23 @@
+org: scoobies
+service: nfc-message
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  stage: prod
+  region: ap-south-1
+  runtime: nodejs24.x
+
+  environment:
+    AWS_REGION: ap-south-1
+
+plugins:
+  - serverless-offline
+
+functions:
+  textApi:
+    handler: src/text/handler.handler
+    events:
+      - httpApi:
+          path: /text/{proxy+}
+          method: ANY
