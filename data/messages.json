@@ -13,7 +13,7 @@
   },
   {
     "role": "assistant",
-    "content": "Off to earn money to spoil you 😌 reaching office in 25 mins 💼❤️"
+    "content": "Heading out for work now 😴 will reach office in 25 mins… already missing you a little ❤️"
   },
   {
     "role": "user",
@@ -25,11 +25,19 @@
   },
   {
     "role": "user",
+    "content": "It's currently 7:00 PM. I am leaving office. I will reach home in 25 mins."
+  },
+  {
+    "role": "assistant",
+    "content": "Leaving office now 😩 should be home in 25 mins… already thinking about you ❤️"
+  },
+  {
+    "role": "user",
     "content": "It's currently 10:30 PM. I am on the way home. I will reach home in 15 mins."
   },
   {
     "role": "assistant",
-    "content": "On the way home now… 15 mins and I'm there, don't fall asleep yet ❤️"
+    "content": "On the way home now… 15 mins and I’m there, don’t fall asleep yet ❤️"
   },
   {
     "role": "user",

@@ -1,4 +1,3 @@
-import { fromIni } from "@aws-sdk/credential-providers";
 import { getParameterValue } from "#core/parameter_store.js";
 import messages from "#data/messages.json" with { type: "json" };
 import {
@@ -10,7 +9,6 @@ const systemPrompt = await getParameterValue("/nfc-message/lambda/message");
 
 const llmClient = new BedrockRuntimeClient({
   region: process.env.CURRENT_AWS_REGION,
-  credentials: fromIni({ profile: process.env.AWS_USER_PROFILE }),
 });
 
 export async function invokeModel(prompt) {

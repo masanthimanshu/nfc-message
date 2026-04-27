@@ -1,14 +1,9 @@
 import crypto from "node:crypto";
 import { logger } from "#core/runtime_logs.js";
-import { fromIni } from "@aws-sdk/credential-providers";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
-const dbClient = new DynamoDBClient({
-  region: process.env.CURRENT_AWS_REGION,
-  credentials: fromIni({ profile: process.env.AWS_USER_PROFILE }),
-});
-
+const dbClient = new DynamoDBClient({ region: process.env.CURRENT_AWS_REGION });
 const docClient = DynamoDBDocumentClient.from(dbClient);
 
 export async function writeData(data) {

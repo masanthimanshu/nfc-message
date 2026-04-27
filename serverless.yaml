@@ -11,7 +11,6 @@ provider:
   environment:
     CURRENT_AWS_REGION: ap-south-1
     TABLE_NAME: messages-data-table
-    AWS_USER_PROFILE: serverless-user
 
   iam: ${file(aws/iam.yaml)}
 

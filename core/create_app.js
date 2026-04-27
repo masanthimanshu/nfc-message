@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 
 export default function createApp(baseUrl, routes) {
