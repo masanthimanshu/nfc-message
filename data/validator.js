@@ -2,10 +2,12 @@ import { z } from "zod";
 import { logger } from "#core/runtime_logs.js";
 
 const messageInputSchema = z.object({
-  battery: z.string(),
   address: z.string(),
+  homeTime: z.string(),
   latitude: z.string(),
   longitude: z.string(),
+  officeTime: z.string(),
+  batteryLevel: z.string(),
 });
 
 /**

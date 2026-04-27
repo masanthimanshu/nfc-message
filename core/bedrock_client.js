@@ -1,8 +1,12 @@
 import { fromIni } from "@aws-sdk/credential-providers";
+import { getParameterValue } from "#core/parameter_store.js";
+import messages from "#data/messages.json" with { type: "json" };
 import {
   InvokeModelCommand,
   BedrockRuntimeClient,
 } from "@aws-sdk/client-bedrock-runtime";
+
+const systemPrompt = await getParameterValue("/nfc-message/lambda/message");
 
 const llmClient = new BedrockRuntimeClient({
   region: process.env.CURRENT_AWS_REGION,
@@ -15,8 +19,8 @@ export async function invokeModel(prompt) {
     contentType: "application/json",
     accept: "application/json",
     body: JSON.stringify({
-      messages: [{ role: "user", content: prompt }],
-      system_instruction: { text: "You are a helpful assistant." },
+      system_instruction: { text: systemPrompt },
+      messages: [...messages, { role: "user", content: prompt }],
     }),
   });
 

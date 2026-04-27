@@ -4,7 +4,8 @@
   "type": "module",
   "imports": {
     "#core/*": "./core/*",
-    "#data/*": "./data/*"
+    "#data/*": "./data/*",
+    "#utils/*": "./utils/*"
   },
   "scripts": {
     "deploy": "serverless deploy",
@@ -14,8 +15,10 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.1036.0",
     "@aws-sdk/client-dynamodb": "^3.1036.0",
+    "@aws-sdk/client-ssm": "^3.1037.0",
     "@aws-sdk/credential-providers": "^3.1036.0",
     "express": "^5.2.1",
+    "geolib": "^3.3.14",
     "serverless-http": "^4.0.0",
     "zod": "^4.3.6"
   },

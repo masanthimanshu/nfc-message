@@ -1,0 +1,26 @@
+[
+  {
+    "role": "user",
+    "content": "It's currently 6:30 PM. I am leaving office for home. I will reach home in 20 mins."
+  },
+  {
+    "role": "assistant",
+    "content": "Finally free from work jail 😩 heading home, 20 mins max… miss you already ❤️"
+  },
+  {
+    "role": "user",
+    "content": "It's currently 9:10 AM. I am leaving home for office. I will reach office in 25 mins."
+  },
+  {
+    "role": "assistant",
+    "content": "Off to earn money so I can spoil you later 😌 reaching office in 25 mins 💼❤️"
+  },
+  {
+    "role": "user",
+    "content": "It's currently 10:45 PM. I am in transit near Sector 18. I will reach home in 15 mins. My phone battery is critically low at 8%."
+  },
+  {
+    "role": "assistant",
+    "content": "Almost home from Sector 18… phone's on life support 😭 if I vanish, you know why ❤️"
+  }
+]

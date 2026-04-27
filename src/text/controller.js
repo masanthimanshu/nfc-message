@@ -1,4 +1,6 @@
 import { logger } from "#core/runtime_logs.js";
+import { createPrompt } from "#utils/prompt.js";
+import { invokeModel } from "#core/bedrock_client.js";
 
 export const textController = {
   /**
@@ -8,9 +10,7 @@ export const textController = {
 
   async writeMessage(req, res) {
     logger.info("Write message request data", { data: req.body });
-
-    return res.send({
-      message: "Write message endpoint is under construction",
-    });
+    const response = await invokeModel(createPrompt(req.body));
+    return res.send(response);
   },
 };
