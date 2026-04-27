@@ -8,6 +8,12 @@ role:
         - "*"
     - Effect: Allow
       Action:
+        - ssm:GetParameter
+        - ssm:GetParameters
+      Resource:
+        - "*"
+    - Effect: Allow
+      Action:
         - dynamodb:*
       Resource:
         - Fn::GetAtt:
