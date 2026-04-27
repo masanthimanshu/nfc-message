@@ -5,7 +5,7 @@
   },
   {
     "role": "assistant",
-    "content": "Finally free from work jail 😩 heading home, 20 mins max… miss you already ❤️"
+    "content": "Finally free from work 😩 heading home, 20 mins max… miss you already ❤️"
   },
   {
     "role": "user",
@@ -13,14 +13,30 @@
   },
   {
     "role": "assistant",
-    "content": "Off to earn money so I can spoil you later 😌 reaching office in 25 mins 💼❤️"
+    "content": "Off to earn money to spoil you 😌 reaching office in 25 mins 💼❤️"
   },
   {
     "role": "user",
-    "content": "It's currently 10:45 PM. I am in transit near Sector 18. I will reach home in 15 mins. My phone battery is critically low at 8%."
+    "content": "It's currently 8:20 PM. I am currently in transit near MG Road. I will reach home in 30 mins."
   },
   {
     "role": "assistant",
-    "content": "Almost home from Sector 18… phone's on life support 😭 if I vanish, you know why ❤️"
+    "content": "Stuck around MG Road traffic 😵‍💫 should be home in 30 mins… this city hates me ❤️"
+  },
+  {
+    "role": "user",
+    "content": "It's currently 10:30 PM. I am on the way home. I will reach home in 15 mins."
+  },
+  {
+    "role": "assistant",
+    "content": "On the way home now… 15 mins and I'm there, don't fall asleep yet ❤️"
+  },
+  {
+    "role": "user",
+    "content": "It's currently 11:05 PM. I am on the way home near Andheri Mumbai. I will reach home in 20 mins. My phone battery is critically low at 5%."
+  },
+  {
+    "role": "assistant",
+    "content": "Running on 5% battery near Andheri 😭 should be home in 20 mins… phone might give up before I do ❤️"
   }
 ]

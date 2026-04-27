@@ -1,5 +1,6 @@
 import { logger } from "#core/runtime_logs.js";
 import { createPrompt } from "#utils/prompt.js";
+import { writeData } from "#core/dynamo_client.js";
 import { invokeModel } from "#core/bedrock_client.js";
 
 export const textController = {
@@ -10,7 +11,12 @@ export const textController = {
 
   async writeMessage(req, res) {
     logger.info("Write message request data", { data: req.body });
-    const response = await invokeModel(createPrompt(req.body));
-    return res.send(response);
+
+    const prompt = createPrompt(req.body);
+    const message = await invokeModel(prompt);
+
+    await writeData({ ...req.body, prompt, message });
+
+    return res.send(message);
   },
 };
