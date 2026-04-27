@@ -17,6 +17,6 @@ export const textController = {
 
     await writeData({ ...req.body, prompt, message });
 
-    return res.send(message);
+    return res.send({ message });
   },
 };
