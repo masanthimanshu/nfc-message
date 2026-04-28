@@ -12,20 +12,11 @@ export const textController = {
   async writeMessage(req, res) {
     logger.info("Write message request data", { data: req.body });
 
-    var message = "";
     const prompt = createPrompt(req.body);
-
-    for (var i = 0; i < 3; i++) {
-      const response = await invokeModel(prompt);
-
-      const step1 = response.replace(/“/g, "").replace(/”/g, "");
-      const step2 = step1.match(/\n\n([^]+?)\n\n/);
-
-      message = step2?.[1]?.replace(/“/g, "").replace(/”/g, "");
-      if (message && message.split(" ").length >= 5) break;
-    }
+    const message = await invokeModel(prompt);
 
     await writeData({ ...req.body, prompt, message });
+
     return res.send({ message });
   },
 };
