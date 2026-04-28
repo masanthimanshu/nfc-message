@@ -2,14 +2,13 @@ import { getDistance } from "geolib";
 import coordinates from "#data/coordinates.json" with { type: "json" };
 
 export function createPrompt(data) {
-  const now = new Date().toLocaleString("en-US", {
-    timeZone: "Asia/Kolkata",
-  });
+  const now = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
 
-  const minutes = now.getHours() * 60 + now.getMinutes();
+  const minutes = now.getUTCHours() * 60 + now.getUTCMinutes();
 
   const time = now.toLocaleTimeString("en-IN", {
     hour12: true,
+    timeZone: "UTC",
     hour: "2-digit",
     minute: "2-digit",
   });
