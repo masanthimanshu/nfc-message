@@ -2,7 +2,9 @@ import { getDistance } from "geolib";
 import coordinates from "#data/coordinates.json" with { type: "json" };
 
 export function createPrompt(data) {
-  const now = new Date();
+  const now = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+  );
 
   const minutes = now.getHours() * 60 + now.getMinutes();
   const time = now.toLocaleTimeString("en-IN", {
