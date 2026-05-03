@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { logger } from "#core/runtime_logs.js";
 
-const messageInputSchema = z.object({
+const inputSchema = z.object({
   address: z.string(),
+  weather: z.string(),
   homeTime: z.string(),
   latitude: z.string(),
   longitude: z.string(),
@@ -24,4 +25,4 @@ const validateData = (schema) => (req, res, next) => {
   }
 };
 
-export const validateMessageInput = validateData(messageInputSchema);
+export const validatedInput = validateData(inputSchema);

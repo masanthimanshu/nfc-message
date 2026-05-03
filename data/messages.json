@@ -37,14 +37,6 @@
   },
   {
     "role": "assistant",
-    "content": "On the way home now… 15 mins and I’m there, don’t fall asleep yet ❤️"
-  },
-  {
-    "role": "user",
-    "content": "It's currently 11:05 PM. I am on the way home near Andheri Mumbai. I will reach home in 20 mins. My phone battery is critically low at 5%."
-  },
-  {
-    "role": "assistant",
-    "content": "Running on 5% battery near Andheri 😭 should be home in 20 mins… phone might give up before I do ❤️"
+    "content": "On the way home now… 15 mins and I'm there, don't fall asleep yet ❤️"
   }
 ]

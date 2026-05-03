@@ -13,10 +13,12 @@ const llmClient = new BedrockRuntimeClient({
 
 export async function invokeModel(prompt) {
   const command = new InvokeModelCommand({
-    modelId: "google.gemma-3-4b-it",
+    modelId: "google.gemma-3-12b-it",
     contentType: "application/json",
     accept: "application/json",
     body: JSON.stringify({
+      max_tokens: 50,
+      temperature: 0.8,
       system_instruction: { text: systemPrompt },
       messages: [...messages, { role: "user", content: prompt }],
     }),
