@@ -17,5 +17,5 @@ role:
         - dynamodb:*
       Resource:
         - Fn::GetAtt:
-            - MessageDataTable
+            - NFCMessagesTable
             - Arn

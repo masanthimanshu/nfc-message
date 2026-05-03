@@ -1,8 +1,8 @@
 Resources:
-  MessageDataTable:
+  NFCMessagesTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: messages-data-table
+      TableName: nfc-messages-table
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: id
