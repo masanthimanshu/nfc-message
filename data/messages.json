@@ -1,42 +1,10 @@
 [
   {
     "role": "user",
-    "content": "It's currently 6:30 PM. I am leaving office for home. I will reach home in 20 mins."
+    "content": "It's currently 12:18 pm. Weather is currently \"35°C and Mostly Sunny\" at my place. I am currently at home and thinking about you. Write a WhatsApp message to Chiku with lot of emojis."
   },
   {
     "role": "assistant",
-    "content": "Finally free from work 😩 heading home, 20 mins max… miss you already ❤️"
-  },
-  {
-    "role": "user",
-    "content": "It's currently 9:10 AM. I am leaving home for office. I will reach office in 25 mins."
-  },
-  {
-    "role": "assistant",
-    "content": "Heading out for work now 😴 will reach office in 25 mins… already missing you a little ❤️"
-  },
-  {
-    "role": "user",
-    "content": "It's currently 8:20 PM. I am currently in transit near MG Road. I will reach home in 30 mins."
-  },
-  {
-    "role": "assistant",
-    "content": "Stuck around MG Road traffic 😵‍💫 should be home in 30 mins… this city hates me ❤️"
-  },
-  {
-    "role": "user",
-    "content": "It's currently 7:00 PM. I am leaving office. I will reach home in 25 mins."
-  },
-  {
-    "role": "assistant",
-    "content": "Leaving office now 😩 should be home in 25 mins… already thinking about you ❤️"
-  },
-  {
-    "role": "user",
-    "content": "It's currently 10:30 PM. I am on the way home. I will reach home in 15 mins."
-  },
-  {
-    "role": "assistant",
-    "content": "On the way home now… 15 mins and I'm there, don't fall asleep yet ❤️"
+    "content": "Hey Chiku! 👋☀️ It's scorching here - 35°C and mostly sunny! 🥵 Just lounging at home and missing you tons! 🥰🥺 Hope you're having a good day! 🤗💖 Thinking of you! 😘"
   }
 ]
