@@ -17,8 +17,8 @@ export async function invokeModel(prompt) {
     contentType: "application/json",
     accept: "application/json",
     body: JSON.stringify({
-      max_tokens: 50,
-      temperature: 0.8,
+      max_tokens: 100,
+      temperature: 0.75,
       system_instruction: { text: systemPrompt },
       messages: [...messages, { role: "user", content: prompt }],
     }),
