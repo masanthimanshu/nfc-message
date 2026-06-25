@@ -1,44 +1,43 @@
 # Agent Guidance for NFC Message
 
-This repository is a small AWS Serverless project that builds a text-generation backend using AWS Bedrock, DynamoDB, and Express.
+This repository is a Serverless AWS backend that generates personalized text messages using AWS Bedrock, validates structured input, and stores both raw and generated data in DynamoDB.
 
-## What to know first
+## Quick starter
 
-- `package.json` defines the main commands:
-  - `npm run dev` — start Serverless Offline for local testing
-  - `npm run deploy` — deploy to AWS via Serverless Framework
-- The project uses Node.js ESM and `package.json` path imports:
-  - `#core/*` -> `./core/*`
-  - `#data/*` -> `./data/*`
-  - `#utils/*` -> `./utils/*`
-- API route code lives under `src/text/`
-  - `src/text/handler.js` — Lambda handler wrapper
-  - `src/text/routes.js` — Express routes and middleware
-  - `src/text/controller.js` — message generation controller
+- `npm install` to install dependencies.
+- `npm run dev` to run Serverless Offline locally.
+- `npm run deploy` to deploy the service with Serverless Framework.
 
-## Key architecture points
+## Core project boundaries
 
-- `serverless.yaml` configures an HTTP API Lambda at `/text/{proxy+}`
-- `utils/prompt.js` builds the LLM prompt from request data
-- `core/bedrock_client.js` calls AWS Bedrock with a model and SSM system prompt
-- `core/dynamo_client.js` persists input and generated response data into DynamoDB
-- `data/validator.js` validates incoming request payloads with `zod`
+- `serverless.yaml` defines the Lambda function, HTTP API route, region, and DynamoDB resource.
+- `src/text/handler.js` wires Express routes into Serverless Lambda.
+- `src/text/routes.js` exposes `/text/health` and `/text/message` with validation middleware.
+- `src/text/controller.js` builds the prompt, invokes Bedrock, and persists records.
+- `utils/prompt.js` composes the user prompt from request data.
+- `core/bedrock_client.js` loads system instructions from SSM and calls Bedrock.
+- `core/dynamo_client.js` writes input and output records to DynamoDB.
+- `data/validator.js` enforces strict request schema with `zod`.
 
-## Important behavior to preserve
+## Important behavior
 
-- The API expects JSON input with fields: `address`, `weather`, `homeTime`, `officeTime`, `latitude`, `longitude`, and `batteryLevel`
-- `core/bedrock_client.js` relies on SSM parameter `/nfc-message/lambda/message`
-- The DynamoDB table name comes from `TABLE_NAME` and is defined in `serverless.yaml`
+- The `/text/message` endpoint requires exact fields:
+  - `address`, `weather`, `homeTime`, `officeTime`, `latitude`, `longitude`, `batteryLevel`
+- The local route base is `/text` when running Serverless Offline.
+- Bedrock uses the SSM prompt key `/nfc-message/lambda/message` and the model ID `google.gemma-3-12b-it`.
+- DynamoDB writes two items per request: an `input` item and an `output` item. Both use the same `id` and a `type` attribute.
+- `TABLE_NAME` is provided via environment variables in `serverless.yaml`.
 
-## Useful references
+## Common edits and how to handle them
 
-- `README.md` — setup, usage examples, and deployment notes
-- `serverless.yaml` — deployment, provider, and resource details
-- `core/parameter_store.js` — AWS SSM integration point
+- When changing the API contract, update `src/text/routes.js`, `data/validator.js`, and `README.md`.
+- When changing prompt content or structure, update `utils/prompt.js` only.
+- When changing Bedrock behavior, update `core/bedrock_client.js` and keep SSM parameter handling intact.
+- When changing persistence, update `core/dynamo_client.js` and ensure the table environment variable remains consistent.
 
-## When editing code
+## References
 
-- Keep Lambda entrypoint logic in `src/text/handler.js`
-- Preserve the prompt generation flow in `utils/prompt.js`
-- Avoid breaking the `#core/*`, `#data/*`, `#utils/*` alias imports
-- If adding features, update both the serverless config and the README as needed
+- `README.md` for setup, local testing, and deployment instructions.
+- `serverless.yaml` for provider, runtime, region, and DynamoDB configuration.
+- `core/parameter_store.js` for AWS SSM parameter retrieval.
+- `README.md` and `SUMMARY.md` for project intent and architecture context.

@@ -1,64 +1,46 @@
 # NFC Message
 
-A Serverless AWS backend that generates personal text messages from NFC-style location and device state inputs.
+[![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/nfc-message.svg)](package.json)
 
-The service receives location, weather, and battery status data, builds a prompt for an AWS Bedrock LLM, stores input/output records in DynamoDB, and returns a generated WhatsApp-style message.
+A Serverless Node.js backend that generates context-aware WhatsApp-style text messages using AWS Bedrock and DynamoDB.
 
-## Why this project is useful
+## What this project does
 
-- Provides a lightweight API for generating context-aware text messages.
-- Uses AWS Bedrock to create natural, personalized message content.
-- Stores both raw inputs and generated outputs in DynamoDB for later analysis.
-- Supports local development with `serverless-offline`.
+`nfc-message` receives structured inputs about a location, weather, commute times, and phone battery level. It builds a prompt for an LLM, calls AWS Bedrock to generate a personalized message, stores the request and response in DynamoDB, and returns the message over a simple HTTP API.
 
-## Features
+## Why it is useful
+
+- Generates natural, situational messages from NFC-like location and device state data
+- Keeps raw input and generated output together for auditability and replay
+- Supports local development with `serverless-offline`
+- Uses AWS Bedrock for model-based text generation and AWS Lambda for serverless deployment
+
+## Key features
 
 - HTTP API built with Express and Serverless Framework
-- Input validation using `zod`
-- Prompt creation based on location, time, weather, battery, and commute state
-- AWS Bedrock model invocation via `@aws-sdk/client-bedrock-runtime`
-- DynamoDB persistence for input and generated message records
-- Health check endpoint for basic status monitoring
+- Input validation with `zod`
+- Prompt composition based on location, time, weather, battery status, and commute state
+- AWS Bedrock model invocation using `@aws-sdk/client-bedrock-runtime`
+- DynamoDB persistence for both input and output records
+- Health check endpoint for quick sanity testing
 
-## Project structure
+## Getting started
 
-- `serverless.yaml` - AWS Lambda / API route configuration
-- `src/text/handler.js` - Lambda handler wiring Express routes to Serverless
-- `src/text/routes.js` - API routes and middleware
-- `src/text/controller.js` - main controller for message generation
-- `utils/prompt.js` - prompt assembly logic for the LLM
-- `core/bedrock_client.js` - Bedrock model invocation
-- `core/dynamo_client.js` - DynamoDB persistence helpers
-- `core/parameter_store.js` - SSM parameter retrieval
-- `data/validator.js` - request validation logic using `zod`
+### Prerequisites
 
-## Prerequisites
-
-- Node.js 20+ or compatible with `nodejs24.x`
+- Node.js 20+ (compatible with `nodejs24.x`)
 - npm
-- AWS credentials configured in your environment
+- AWS credentials configured in your shell or environment
 - AWS account with Bedrock access and permissions to deploy Lambda/DynamoDB
 
-## Setup
-
-1. Install dependencies:
+### Install dependencies
 
 ```bash
 npm install
 ```
 
-2. Configure environment variables if needed:
-
-- `CURRENT_AWS_REGION` is set in `serverless.yaml` to `ap-south-1`
-- `TABLE_NAME` is set to `nfc-messages-table`
-
-3. Make sure the following AWS SSM parameter exists:
-
-- `/nfc-message/lambda/message`
-
-This parameter is used as the system prompt when calling Bedrock.
-
-## Local development
+### Local development
 
 Start the API locally with Serverless Offline:
 
@@ -66,9 +48,9 @@ Start the API locally with Serverless Offline:
 npm run dev
 ```
 
-The local route base is mounted at `/text`.
+The local API is mounted at `/text`.
 
-### Example local requests
+### Example requests
 
 Health check:
 
@@ -92,48 +74,74 @@ curl -X POST http://localhost:3000/text/message \
   }'
 ```
 
+## Configuration
+
+The service relies on these environment values:
+
+- `CURRENT_AWS_REGION` — AWS region used by AWS SDK clients
+- `TABLE_NAME` — DynamoDB table name
+
+`serverless.yaml` sets:
+
+- `CURRENT_AWS_REGION: ap-south-1`
+- `TABLE_NAME: nfc-messages-table`
+
+### Required AWS parameter
+
+Create this SSM parameter before using the service:
+
+- `/nfc-message/lambda/message`
+
+This parameter provides the system prompt used by the Bedrock model.
+
 ## Deployment
 
-Deploy the service using the Serverless Framework:
+Deploy the service using Serverless Framework:
 
 ```bash
 npm run deploy
 ```
 
-The function is configured in `serverless.yaml` as:
+The function configuration is defined in `serverless.yaml`:
 
-- path: `/text/{proxy+}`
-- method: `ANY`
 - handler: `src/text/handler.handler`
+- HTTP API route: `/text/{proxy+}`
+- method: `ANY`
 
-## Runtime behavior
+## Project structure
 
-When a request is posted to `/text/message`:
+- `serverless.yaml` — AWS Lambda/API config
+- `src/text/handler.js` — Lambda handler bridging Express and Serverless
+- `src/text/routes.js` — Express routes for health and message generation
+- `src/text/controller.js` — core request flow and orchestration
+- `utils/prompt.js` — prompt generation logic for message content
+- `core/bedrock_client.js` — Bedrock model invocation and response parsing
+- `core/dynamo_client.js` — DynamoDB persistence helpers
+- `core/parameter_store.js` — SSM parameter retrieval
+- `data/validator.js` — request validation middleware
 
-1. Input data is validated via `data/validator.js`
-2. A prompt is composed in `utils/prompt.js`
-3. AWS Bedrock is called in `core/bedrock_client.js`
-4. Input and generated output are stored in DynamoDB
-5. The generated message is returned to the caller
+## How it works
 
-## Environment details
+When a POST request is made to `/text/message`:
 
-- DynamoDB table: `nfc-messages-table`
-- Bedrock model: `google.gemma-3-12b-it`
-- Primary AWS region: `ap-south-1`
+1. `data/validator.js` validates the request body
+2. `utils/prompt.js` creates the prompt text from the input payload
+3. `core/bedrock_client.js` invokes AWS Bedrock with the prompt
+4. `core/dynamo_client.js` stores the input and generated output
+5. The generated message is returned in the response
 
-## Getting help
+## Support
 
-- Open an issue or submit a pull request on the repository
-- Check AWS Bedrock and Serverless Framework documentation for deployment issues
-- Inspect Lambda logs for runtime diagnostics
+- Open an issue in this repository for bugs or enhancement requests
+- Use GitHub pull requests to submit changes
+- Review AWS Bedrock and Serverless Framework docs for deployment and runtime troubleshooting
 
 ## Contributing
 
-Contributions are welcome. Open issues for bug reports or feature requests, and send pull requests for code changes.
+Contributions are welcome. Please open issues for bug reports or feature requests, and submit pull requests for code changes.
 
-If you add formal contribution guidance, link it here as `CONTRIBUTING.md`.
+> If this repository adds a `CONTRIBUTING.md`, link it here.
 
 ## License
 
-This project is licensed under the terms defined in `package.json`.
+This project is licensed under the ISC license. See `package.json` for details.
