@@ -1,8 +1,5 @@
 # NFC Message
 
-[![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/nfc-message.svg)](package.json)
-
 A Serverless Node.js backend that generates context-aware WhatsApp-style text messages using AWS Bedrock and DynamoDB.
 
 ## What this project does
@@ -52,13 +49,13 @@ The local API is mounted at `/text`.
 
 ### Example requests
 
-Health check:
+#### Health check:
 
 ```bash
 curl http://localhost:3000/text/health
 ```
 
-Generate a message:
+#### Generate a message:
 
 ```bash
 curl -X POST http://localhost:3000/text/message \
@@ -129,19 +126,3 @@ When a POST request is made to `/text/message`:
 3. `core/bedrock_client.js` invokes AWS Bedrock with the prompt
 4. `core/dynamo_client.js` stores the input and generated output
 5. The generated message is returned in the response
-
-## Support
-
-- Open an issue in this repository for bugs or enhancement requests
-- Use GitHub pull requests to submit changes
-- Review AWS Bedrock and Serverless Framework docs for deployment and runtime troubleshooting
-
-## Contributing
-
-Contributions are welcome. Please open issues for bug reports or feature requests, and submit pull requests for code changes.
-
-> If this repository adds a `CONTRIBUTING.md`, link it here.
-
-## License
-
-This project is licensed under the ISC license. See `package.json` for details.
