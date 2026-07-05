@@ -1,9 +1,11 @@
-# NFC Message
+# Serverless AI Messaging Backend
 
-A serverless Node.js backend that converts location, weather, commute, and device state data into personalized, context-aware messages using AWS Bedrock.
+- Purpose: Built a serverless Node.js backend that transforms structured context such as location, weather, commute timing, and device state into personalized, context-aware text messages using AWS Bedrock.
 
-- Purpose: Deliver an API-driven messaging service that generates NFC-style text content from structured input and persists both requests and LLM responses for auditability.
-- Architecture: Modular Express API deployed as AWS Lambda via Serverless Framework, backed by DynamoDB persistence and SSM Parameter Store for prompt configuration.
-- Core technologies: Node.js ESM, AWS Bedrock, DynamoDB, SSM, Serverless Framework, Express, `zod`, `@aws-sdk/client-bedrock-runtime`, and `serverless-offline`.
-- Contributions: Implements prompt composition, structured validation, Bedrock model invocation, durable input/output storage, and local development support.
-- Impact: Provides scalable, infrastructure-as-code AWS backend capabilities for automated, conversational message generation with secure, audit-ready data flow.
+- Architecture: Designed a modular Express API deployed on AWS Lambda with Serverless Framework, supported by DynamoDB persistence, SSM Parameter Store, and structured validation for scalable, secure request handling.
+
+- Core technologies: Node.js (ESM), Express, AWS Bedrock, DynamoDB, AWS Systems Manager, Serverless Framework, zod, and serverless-offline.
+
+- Key contributions: Implemented prompt construction, Bedrock model integration, request validation, durable input/output storage, and a health-check API to enable reliable, audit-ready message generation.
+
+- Impact: Delivered an infrastructure-as-code, cloud-native service that supports fast, maintainable AI-driven communication workflows with strong backend state management and operational resilience.
