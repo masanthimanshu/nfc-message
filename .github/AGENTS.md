@@ -1,6 +1,6 @@
 # Agent Guidance for NFC Message
 
-This repository is a Serverless AWS backend that generates personalized text messages using AWS Bedrock, validates structured input, and stores both raw and generated data in DynamoDB.
+This repository is a Serverless AWS backend that generates personalized text messages using AWS Bedrock, validates structured input, and stores both raw input and generated output in DynamoDB.
 
 ## Quick starter
 
@@ -10,34 +10,55 @@ This repository is a Serverless AWS backend that generates personalized text mes
 
 ## Core project boundaries
 
-- `serverless.yaml` defines the Lambda function, HTTP API route, region, and DynamoDB resource.
-- `src/text/handler.js` wires Express routes into Serverless Lambda.
-- `src/text/routes.js` exposes `/text/health` and `/text/message` with validation middleware.
-- `src/text/controller.js` builds the prompt, invokes Bedrock, and persists records.
-- `utils/prompt.js` composes the user prompt from request data.
-- `core/bedrock_client.js` loads system instructions from SSM and calls Bedrock.
-- `core/dynamo_client.js` writes input and output records to DynamoDB.
-- `data/validator.js` enforces strict request schema with `zod`.
+- `serverless.yaml` defines the Lambda function, HTTP API route, provider region, runtime, environment variables, and DynamoDB resource.
+- `src/text/handler.js` bridges Express into AWS Lambda via `serverless-http`.
+- `src/text/routes.js` defines `/text/health` and `/text/message` and applies validation.
+- `src/text/controller.js` orchestrates prompt creation, Bedrock invocation, and persistence.
+- `utils/prompt.js` composes the prompt from request payload fields.
+- `core/bedrock_client.js` loads the system prompt from SSM and invokes Bedrock.
+- `core/dynamo_client.js` writes the input and output records to DynamoDB.
+- `data/validator.js` validates request payloads using `zod`.
+- `core/parameter_store.js` reads SSM parameters used by Bedrock.
 
-## Important behavior
+## Important conventions
 
-- The `/text/message` endpoint requires exact fields:
+- Use ESM imports and the path aliases defined in `package.json`:
+  - `#core/*` -> `./core/*`
+  - `#data/*` -> `./data/*`
+  - `#utils/*` -> `./utils/*`
+- Local development runs with Serverless Offline; the route base is `/text`.
+- `/text/message` requires strict JSON with these fields:
   - `address`, `weather`, `homeTime`, `officeTime`, `latitude`, `longitude`, `batteryLevel`
-- The local route base is `/text` when running Serverless Offline.
-- Bedrock uses the SSM prompt key `/nfc-message/lambda/message` and the model ID `google.gemma-3-12b-it`.
-- DynamoDB writes two items per request: an `input` item and an `output` item. Both use the same `id` and a `type` attribute.
-- `TABLE_NAME` is provided via environment variables in `serverless.yaml`.
+- The Bedrock model is `google.gemma-3-12b-it`.
+- Bedrock uses the SSM parameter `/nfc-message/lambda/message` to load system instructions.
+- `data/messages.json` provides the fixed conversation history used for Bedrock requests.
+- DynamoDB writes two items per request: an `input` item and an `output` item sharing the same `id`.
+
+## Request handling flow
+
+1. `src/text/routes.js` receives the request and applies `validatedInput`.
+2. `src/text/controller.js` calls `createPrompt(req.body)`.
+3. `core/bedrock_client.js` invokes Bedrock with `system_instruction` and a user message payload.
+4. `core/dynamo_client.js` writes input metadata and generated output separately.
+5. The response returns `{ message }`.
 
 ## Common edits and how to handle them
 
-- When changing the API contract, update `src/text/routes.js`, `data/validator.js`, and `README.md`.
-- When changing prompt content or structure, update `utils/prompt.js` only.
-- When changing Bedrock behavior, update `core/bedrock_client.js` and keep SSM parameter handling intact.
-- When changing persistence, update `core/dynamo_client.js` and ensure the table environment variable remains consistent.
+- API contract changes: update `src/text/routes.js`, `data/validator.js`, and `README.md`.
+- Prompt or message-generation changes: update `utils/prompt.js`.
+- Bedrock integration changes: update `core/bedrock_client.js`; keep SSM parameter handling intact.
+- Persistence changes: update `core/dynamo_client.js` and verify `TABLE_NAME` remains configured.
+
+## Notes for agents
+
+- Do not migrate code to CommonJS; this repo is ESM-first.
+- Preserve the route base `/text` for local offline testing.
+- Keep API behavior and response shape stable when editing controller or persistence.
+- Use `README.md` for setup and deployment context, not as the source of truth for code behavior.
 
 ## References
 
 - `README.md` for setup, local testing, and deployment instructions.
-- `serverless.yaml` for provider, runtime, region, and DynamoDB configuration.
+- `serverless.yaml` for provider, runtime, environment variables, and resource definitions.
 - `core/parameter_store.js` for AWS SSM parameter retrieval.
-- `README.md` and `SUMMARY.md` for project intent and architecture context.
+- `data/messages.json` for Bedrock conversation history.

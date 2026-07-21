@@ -1,11 +1,7 @@
 # Serverless AI Messaging Backend
 
-- Purpose: Built a serverless Node.js backend that transforms structured context such as location, weather, commute timing, and device state into personalized, context-aware text messages using AWS Bedrock.
-
-- Architecture: Designed a modular Express API deployed on AWS Lambda with Serverless Framework, supported by DynamoDB persistence, SSM Parameter Store, and structured validation for scalable, secure request handling.
-
-- Core technologies: Node.js (ESM), Express, AWS Bedrock, DynamoDB, AWS Systems Manager, Serverless Framework, zod, and serverless-offline.
-
-- Key contributions: Implemented prompt construction, Bedrock model integration, request validation, durable input/output storage, and a health-check API to enable reliable, audit-ready message generation.
-
-- Impact: Delivered an infrastructure-as-code, cloud-native service that supports fast, maintainable AI-driven communication workflows with strong backend state management and operational resilience.
+- Purpose: Built a cloud-native Node.js service that transforms location, weather, commute, and device-state data into personalized, context-aware messages using AWS Bedrock.
+- Architecture: Designed a modular Express API deployed on AWS Lambda with Serverless Framework, backed by DynamoDB persistence, SSM Parameter Store, and schema validation for scalable, secure request handling.
+- Core technologies: Node.js (ESM), Express, AWS Bedrock, DynamoDB, AWS Systems Manager, Lambda, CloudWatch, Serverless Framework, zod, and serverless-offline.
+- Key contributions: Implemented prompt generation, Bedrock model integration, request validation, durable input/output storage, monitoring support through CloudWatch, and a health-check endpoint to support reliable, audit-ready AI workflows.
+- Impact: Delivered an infrastructure-as-code, production-ready backend that accelerates AI-driven communications with strong backend state management, observability, maintainability, and operational resilience.

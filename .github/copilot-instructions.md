@@ -1,33 +1,25 @@
 # Copilot Instructions
 
-This repository is a Serverless Node.js backend that generates NFC-style context-aware text messages via AWS Bedrock, stores input/output records in DynamoDB, and exposes an Express API over Lambda.
+This repository is a Serverless Node.js backend that generates NFC-style context-aware text messages via AWS Bedrock, stores request and response records in DynamoDB, and exposes an Express API over Lambda.
 
 ## Primary goals
 
 - Preserve the API contract in `src/text/routes.js`, especially `/text/message` and `/text/health`.
-- Keep prompt construction in `utils/prompt.js` and Bedrock calls in `core/bedrock_client.js`.
-- Keep persistence logic in `core/dynamo_client.js` and maintain the Serverless deployment flow in `serverless.yaml`.
+- Keep prompt generation in `utils/prompt.js` and Bedrock integration in `core/bedrock_client.js`.
+- Keep persistence logic in `core/dynamo_client.js` and Serverless deployment configuration in `serverless.yaml`.
 
-## Important conventions
+## Key conventions
 
-- Use ESM imports and the path aliases defined in `package.json`.
+- This repo uses ESM imports and package aliases defined in `package.json`:
   - `#core/*` -> `./core/*`
   - `#data/*` -> `./data/*`
   - `#utils/*` -> `./utils/*`
-- Local development uses Serverless Offline with the route base mounted at `/text`.
-- `/text/message` expects strict JSON input with these required fields:
+- Local development runs with Serverless Offline via `npm run dev`, and the route base is mounted at `/text`.
+- `/text/message` requires strict JSON with these fields:
   - `address`, `weather`, `homeTime`, `officeTime`, `latitude`, `longitude`, `batteryLevel`
-- Bedrock system prompt is loaded from SSM parameter `/nfc-message/lambda/message` and the model is `google.gemma-3-12b-it`.
-- DynamoDB writes two records per request: input and generated output, both using the same `id` and a `type` attribute.
+- Bedrock uses the SSM parameter `/nfc-message/lambda/message` for the system prompt and the model `google.gemma-3-12b-it`.
+- DynamoDB persistence writes two items per request: an `input` item and an `output` item sharing the same `id`.
 
-## Recommended references
+## Use this file as a quick guide
 
-- `README.md` for setup, local testing, and deployment instructions
-- `serverless.yaml` for AWS Lambda/API configuration and environment variables
-- `.github/AGENTS.md` for detailed code and behavior guidance
-
-## When troubleshooting
-
-- Check `core/dynamo_client.js` for persistence and item shape
-- Check `core/bedrock_client.js` for Bedrock invocation, system prompt loading, and JSON parsing
-- Check `data/validator.js` for the request validation middleware
+For more detailed workspace-specific guidance, see `.github/AGENTS.md`.
