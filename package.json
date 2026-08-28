@@ -13,10 +13,10 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.1075.0",
-    "@aws-sdk/client-dynamodb": "^3.1075.0",
-    "@aws-sdk/client-ssm": "^3.1075.0",
-    "@aws-sdk/lib-dynamodb": "^3.1075.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.1120.0",
+    "@aws-sdk/client-dynamodb": "^3.1120.0",
+    "@aws-sdk/client-ssm": "^3.1120.0",
+    "@aws-sdk/lib-dynamodb": "^3.1120.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "geolib": "^3.3.14",
@@ -25,9 +25,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.5.0",
-    "globals": "^17.7.0",
-    "serverless": "^4.38.1",
-    "serverless-offline": "^14.7.4"
+    "eslint": "^10.9.1",
+    "globals": "^17.11.0",
+    "serverless": "^4.41.1",
+    "serverless-offline": "^14.8.0"
   }
 }
