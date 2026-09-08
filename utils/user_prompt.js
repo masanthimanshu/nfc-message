@@ -22,7 +22,7 @@ function resolveLocationState(data, minutes, homeDistance, officeDistance) {
     : `I am currently somewhere near "${data.address}".`;
 }
 
-export function createPrompt(data) {
+export function userPrompt(data) {
   const now = new Date();
   const time = now.toLocaleTimeString("en-IN", {
     hour12: true,

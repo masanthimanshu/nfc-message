@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { logger } from "#core/runtime_logs.js";
+import { logger } from "#core/cloudwatch_logs.js";
 
 const inputSchema = z.object({
   address: z.string(),
